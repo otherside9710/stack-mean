@@ -9,7 +9,7 @@
       <div class="card">
         <div class="card-content">
           <form #employeeForm="ngForm" (ngSubmit)="addEmployee(employeeForm)">
-            <!--<input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="emplService.selectedEmployee._id">-->
+            <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="emplService.selectedEmployee._id">
             <div class="row">
               <div class="input-field col s12">
                 <input type="text" name="name" #name="ngModel" [(ngModel)]="emplService.selectedEmployee.name"
@@ -29,7 +29,7 @@
               </div>
               <div class="card-action">
                 <div class="input-field col s12">
-                  <button class="btn rigth" style="margin: 5px">Save</button>
+                  <button class="btn rigth" type="submit" style="margin: 5px">Save</button>
                   <button class="btn" (click)="resetForm(employeeForm)">Clean</button>
                 </div>
               </div>
@@ -57,7 +57,7 @@
               <a (click)="updateEmployee(employee)">
                 <i class="material-icons">edit</i>
               </a>
-              <a (click)="deleteEmployee(employee)">
+              <a (click)="deleteEmployee(employee._id)">
                 <i class="material-icons">delete</i>
               </a>
              </td>

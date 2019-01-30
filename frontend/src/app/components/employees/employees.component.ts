@@ -21,12 +21,21 @@ export class EmployeesComponent implements OnInit {
   }
 
   addEmployee(form: NgForm) {
-    this.emplService.postEmployee(form.value)
-      .subscribe(res => {
-        this.resetForm(form);
-        M.toast({html: 'Employee Saved!'});
-        this.getEmployees();
-      });
+    if (form.value._id) {
+      this.emplService.putEmployee(form.value)
+        .subscribe(res => {
+          this.resetForm(form);
+          M.toast({html: 'Employee Updated!'});
+          this.getEmployees();
+        });
+    } else {
+      this.emplService.postEmployee(form.value)
+        .subscribe(res => {
+          this.resetForm(form);
+          M.toast({html: 'Employee Saved!'});
+          this.getEmployees();
+        });
+    }
   }
 
   getEmployees() {
@@ -37,14 +46,22 @@ export class EmployeesComponent implements OnInit {
       });
   }
 
-  updateEmployee(employee : Employee){
-      this.emplService.selectedEmployee = employee;
-      this.emplService.putEmployee(employee);
-  }
-  deleteEmployee(employee : Employee){
-
+  updateEmployee(employee: Employee) {
+    this.emplService.selectedEmployee = employee;
+    this.emplService.putEmployee(employee);
   }
 
+  deleteEmployee(_id: string) {
+    if (confirm("Are you sure to delete it?")) {
+      this.emplService.deleteEmployee(_id)
+        .subscribe(res => {
+          M.toast({html: 'Employee Deleted!'});
+          this.getEmployees();
+        });
+    }
+  }
+
+  //TODO se manda el form cuando le doy en limpiar, corregir esto en algun futuro lejano
   resetForm(form ?: NgForm) {
     if (form) {
       form.reset();
